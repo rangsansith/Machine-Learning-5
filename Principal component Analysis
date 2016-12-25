@@ -1,0 +1,89 @@
+import numpy as np
+import math
+
+# 2D-array training matrix of 2882 * 20 dimensions
+A = np.loadtxt("C:/textbooks/PCA Code-k/PCA Code/A_Matrix.csv", delimiter=",")
+
+# L Matrix of ______ dimensions
+L = np.mat(A.T) * np.mat(A)
+
+# 2D-array of eigenvalues of 2882 * 1 dimensions; 2D-array of eigenvectors of 2882 * 20 dimensions
+L_eigenvalues, L_eigenvectors = np.linalg.eig(L)
+
+print("\nDimensions of eigenvalue matrix of L: "+str(np.array(L_eigenvalues).shape))
+print("\nDimensions of eigenvector matrix of L: "+str(np.array(L_eigenvectors).shape))
+
+print("\nNo. of eigenvalues: "+str(len(L_eigenvalues)))
+
+# 2D-array of eigenvectors of covariance matrix C i.e. u = A*L_eigenvectors
+u = np.array(np.mat(A) * np.mat(L_eigenvectors))
+
+# 2D-array of normalization values for u
+normvals = [ 0*j for j in range(0, 20) ]
+
+for j in range(0, 20):
+    for i in range(0, 2882):
+        normvals[j] += u[i][j] * u[i][j]
+        # print u[i][j]
+
+    normvals[j] = math.sqrt(normvals[j])
+
+# 2D-array of (normalized) eigenvectors of covariance matrix C i.e. mu = u/normvals
+
+mu = [ [0 for j in range(0, 20)] for i in range(0, 2882) ]
+
+for j in range(0, 20):
+    for i in range(0, 2882):
+        mu[i][j] = u[i][j] / normvals[j]
+
+mu_arr = np.array(mu)
+
+# 2D-array of scoring matrix delta based on training
+
+delta = [ [0 for j in range(0, 20)] for i in range(0, 15) ]
+
+for i in range(0, 20):
+    for j in range(0, 15):
+        delta[j][i] = np.dot(A[:, i].T, mu_arr[:, j].T)
+
+print("\nDimensions of Training Matrix Delta: "+str(np.array(delta).shape))
+print("\nThis is the scoring matrix (Delta) : \n" + str(delta))
+
+
+# 2D-array of test vector that needs to be scored of 2882 * 1 dimensions
+T = np.loadtxt("C:/textbooks/PCA Code-k/PCA Code/PCA Testing (.csv)/Malware Test Data/Test_01.csv", delimiter=",")
+
+T_tr_arr = np.array(T.T)
+print ("\nDimensions of T transpose: "+str(T_tr_arr.shape))
+
+# 2D-array of scoring matrix W for test vector T
+W = [ 0 for i in range(0,15) ]
+
+for j in range(0, 15):
+    W[j] = np.dot(T.T, mu_arr[:, j].T)
+
+print("\nDimensions of Testing Matrix W: "+str(np.array(W).shape))
+print("\nThis is the weight matrix for test vector X : \n"+str(W))
+
+dist = []
+d = 0.0
+
+delta = np.array(delta)
+
+for rows in range(0, 15):
+   i = 0
+   for item in delta[:, rows]:
+       d += math.pow((W[i] - item), 2)
+       i += 1
+   #print("\nDistance between W and omega" + str(rows+1) + " : " + str(math.sqrt(d)))
+   dist.append(math.sqrt(d))
+
+print("\nPCA Score (min. distance) is : " + str(min(dist)))
+
+
+
+
+
+
+
+
