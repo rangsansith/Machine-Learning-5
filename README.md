@@ -5,3 +5,6 @@ These include
 2) Principal componenet analysis . 
 3) K-Means clustering 
 4) EM-Clustering . 
+5)EM-clustering with gaussian distribution 
+6)Scoring files  using forward algorithm. 
+7) Multiple sequence allignment for Profile Hidden Markov models 
