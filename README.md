@@ -8,3 +8,5 @@ These include
 5)EM-clustering with gaussian distribution 
 6)Scoring files  using forward algorithm. 
 7) Multiple sequence allignment for Profile Hidden Markov models 
+8)Singular value decomposition 
+9) quadratic programming : SSMO - Group 
