@@ -1,4 +1,4 @@
-# machine-learning
+# Machine-Learning
 The repository contains my code of machine learning algorithms coded in java and python . 
 These include 
 1) Hidden Markov Models 
