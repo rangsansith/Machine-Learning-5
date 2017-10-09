@@ -1,6 +1,6 @@
 <h1>Machine-Learning</h1>
 The repository contains my code of machine learning algorithms coded in java and python</br>
-These include...
+These include...</br>
 1.Hidden Markov Models</br>
 2.Principal componenet analysis</br> 
 3.K-Means clustering</br>
